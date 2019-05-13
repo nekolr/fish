@@ -54,7 +54,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             UsernamePasswordAuthenticationToken authenticationToken =
                     new UsernamePasswordAuthenticationToken(jwtUser.getUsername(), userDetails.getAuthorities());
 
-            log.info("Authorized user '{}', setting security context", authenticationToken.getPrincipal());
+            log.info("Authorized user '{}', setting security context", jwtUser.getUsername());
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         } catch (ExpiredJwtException e) {
             // token 过期

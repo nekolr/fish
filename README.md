@@ -6,7 +6,7 @@
      <a href="https://github.com/nekolr/fish"><img src="https://img.shields.io/github/stars/nekolr/fish.svg?style=flat&label=Stars" /></a>
      <a href="https://github.com/nekolr/fish"><img src="https://img.shields.io/github/watchers/nekolr/fish.svg?style=flat&label=Watch" /></a>
      <a href="https://github.com/nekolr/fish"><img src="https://img.shields.io/github/forks/nekolr/fish.svg?style=flat&label=Fork" /></a>
-     <a href="javascript:;"><img src="https://img.shields.io/github/downloads/nekolr/fish/total.svg?style=flat" /></a>
+     <a href="https://github.com/nekolr/fish/releases"><img src="https://img.shields.io/github/downloads/nekolr/fish/total.svg?style=flat" /></a>
      <a href="https://travis-ci.com/nekolr/fish"><img src="https://img.shields.io/travis/com/nekolr/fish.svg?style=flat" /></a>
 </p>
 

@@ -9,6 +9,8 @@ import com.nekolr.fish.vo.PageVO;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -23,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@CacheConfig(cacheNames = "user")
 public class UserQueryService {
 
     @Autowired
@@ -30,6 +33,7 @@ public class UserQueryService {
     @Resource
     private UserMapper userMapper;
 
+    @Cacheable(keyGenerator = "keyGenerator")
     public PageVO queryAll(UserDTO userDTO, Pageable pageable) {
         Page<User> users = userRepository.findAll(new Spec(userDTO), pageable);
         return PageUtils.toPageVO(users.map(userMapper::toDto));

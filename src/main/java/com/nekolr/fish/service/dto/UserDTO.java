@@ -4,14 +4,16 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.Set;
 
 /**
  * @author nekolr
  */
 @Data
-public class UserDTO {
+public class UserDTO implements Serializable {
 
     @ApiModelProperty(hidden = true)
     private Long id;
@@ -37,4 +39,22 @@ public class UserDTO {
     private Timestamp createTime;
 
     private Date lastPasswordResetTime;
+
+    @ApiModelProperty(hidden = true)
+    private Set<RoleDTO> roles;
+
+    @Override
+    public String toString() {
+        return "UserDTO{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", realName='" + realName + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", enabled=" + enabled +
+                ", createTime=" + createTime +
+                ", lastPasswordResetTime=" + lastPasswordResetTime +
+                '}';
+    }
 }
