@@ -2,14 +2,13 @@
 spring:
   application:
     name: fish
+  # profile active dev
+  profiles:
+    active: dev
+  jackson:
+    time-zone: GMT+8
   jpa:
-    hibernate:
-      ddl-auto: update
     database-platform: org.hibernate.dialect.MySQL57Dialect
-  datasource:
-    url: jdbc:mysql://127.0.0.1:3306/fish?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
-    username: root
-    password: root
 
 # tomcat
 server:
