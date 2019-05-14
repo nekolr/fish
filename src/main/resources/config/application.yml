@@ -22,6 +22,10 @@ spring:
         max-wait: 10000
         max-idle: 8
       shutdown-timeout: 100
+  cache:
+    redis:
+      time-to-live: 1d
+      cache-null-values: false
 
 
 # tomcat
@@ -34,4 +38,4 @@ server:
 # log
 logging:
   file: ${user.home}/fish/fish.log
-  level.com.nekolr: info
+  level.com.nekolr: debug
