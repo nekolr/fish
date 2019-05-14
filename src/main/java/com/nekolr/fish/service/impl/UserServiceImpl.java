@@ -35,4 +35,10 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.save(source);
         return userMapper.toDto(user);
     }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id);
+    }
 }

@@ -3,6 +3,7 @@ package com.nekolr.fish.service;
 import com.nekolr.fish.entity.User;
 import com.nekolr.fish.service.dto.UserDTO;
 import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 
@@ -29,5 +30,13 @@ public interface UserService {
      */
     @CachePut(key = "#user.username")
     UserDTO saveUser(User user);
+
+    /**
+     * 删除用户
+     *
+     * @param id
+     */
+    @CacheEvict(allEntries = true)
+    void deleteUser(Long id);
 
 }

@@ -1,6 +1,7 @@
 package com.nekolr.fish.controller;
 
 import com.nekolr.fish.constant.Fish;
+import com.nekolr.fish.log.annotation.Log;
 import com.nekolr.fish.security.AuthenticationInfo;
 import com.nekolr.fish.security.CustomUserDetails;
 import com.nekolr.fish.util.EncryptUtils;
@@ -30,6 +31,7 @@ public class AuthController {
     @Qualifier("customUserDetailsService")
     private UserDetailsService userDetailsService;
 
+    @Log("用户登录")
     @PostMapping("/login")
     public ResponseEntity login(@Validated @RequestBody AuthenticationUser authUser) {
 

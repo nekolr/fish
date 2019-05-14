@@ -12,3 +12,18 @@
 
 ## 简介
 Fish 是一个使用 Spring Boot + Spring Security + JWT 开发的基于 RBAC 权限控制的快速启动器。
+
+## 使用
+> 缓存使用了 Redis，因此需要先启动一个 Redis Server 服务，然后再启动主程序。Redis 的配置信息在 application.yml 文件中。
+
+- 打包
+
+```
+$ mvn clean package
+```
+
+- 启动
+
+```
+$ cd target && java -jar fish-0.0.1-SNAPSHOT.jar
+```

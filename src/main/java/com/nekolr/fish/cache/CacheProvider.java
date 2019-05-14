@@ -1,6 +1,8 @@
 package com.nekolr.fish.cache;
 
 /**
+ * 缓存控制接口
+ *
  * @author nekolr
  */
 public interface CacheProvider {
