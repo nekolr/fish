@@ -67,7 +67,7 @@ public class LogAspect {
         try {
             result = joinPoint.proceed();
         } catch (Throwable e) {
-            throw new RuntimeException(e.getMessage());
+            throw new RuntimeException(e);
         }
 
         Log log = new Log(LogType.INFO.getValue(), System.currentTimeMillis() - currentTime);

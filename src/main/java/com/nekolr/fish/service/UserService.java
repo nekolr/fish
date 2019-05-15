@@ -28,7 +28,7 @@ public interface UserService {
      * @param user
      * @return
      */
-    @CachePut(key = "#user.username")
+    @CachePut(key = "#p0.username")
     UserDTO saveUser(User user);
 
     /**
