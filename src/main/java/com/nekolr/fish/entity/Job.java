@@ -61,7 +61,7 @@ public class Job implements Serializable {
     /**
      * 职务所属部门
      */
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "department_id")
     private Department department;
 

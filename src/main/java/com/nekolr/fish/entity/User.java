@@ -57,14 +57,14 @@ public class User implements Serializable {
     /**
      * 部门
      */
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "department_id")
     private Department department;
 
     /**
      * 职务
      */
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "job_id")
     private Job job;
 
@@ -101,7 +101,7 @@ public class User implements Serializable {
     /**
      * 角色集合
      */
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany
     @JoinTable(name = "user_role",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
