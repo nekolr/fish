@@ -3,11 +3,11 @@ package com.nekolr.fish.security.service;
 import com.nekolr.fish.dao.RoleRepository;
 import com.nekolr.fish.entity.Role;
 import com.nekolr.fish.entity.User;
-import com.nekolr.fish.security.CustomGrantedAuthority;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -37,7 +37,7 @@ public class AuthorityService {
         Set<Role> roles = roleRepository.findByUsers_Id(user.getId());
 
         return roles.stream().flatMap(role -> role.getResources().stream())
-                .map(resource -> new CustomGrantedAuthority(resource.getName()))
+                .map(resource -> new SimpleGrantedAuthority(resource.getName()))
                 .collect(Collectors.toList());
     }
 }

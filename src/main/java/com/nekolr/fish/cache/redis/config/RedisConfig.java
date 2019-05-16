@@ -1,9 +1,8 @@
 package com.nekolr.fish.cache.redis.config;
 
 import com.alibaba.fastjson.JSON;
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.PropertyAccessor;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.alibaba.fastjson.parser.ParserConfig;
+import com.nekolr.fish.cache.redis.FastJsonRedisSerializer;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
@@ -18,7 +17,6 @@ import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
@@ -91,7 +89,7 @@ public class RedisConfig {
                 // 设置 key 值序列化
                 .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(stringRedisSerializer()))
                 // 设置 value 值序列化
-                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(jackson2JsonRedisSerializer()));
+                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(fastJsonRedisSerializer()));
         // 是否允许缓存空值
         if (!cacheProperties.getRedis().isCacheNullValues()) {
             configuration = configuration.disableCachingNullValues();
@@ -121,30 +119,18 @@ public class RedisConfig {
         // 使用 StringRedisSerializer 序列化 redis 的 key
         redisTemplate.setKeySerializer(stringRedisSerializer());
         // 使用 Jackson2JsonRedisSerializer 序列化 redis 的 value
-        redisTemplate.setValueSerializer(jackson2JsonRedisSerializer());
+        redisTemplate.setValueSerializer(fastJsonRedisSerializer());
         redisTemplate.setHashKeySerializer(stringRedisSerializer());
-        redisTemplate.setHashValueSerializer(jackson2JsonRedisSerializer());
+        redisTemplate.setHashValueSerializer(fastJsonRedisSerializer());
+
+        ParserConfig.getGlobalInstance().addAccept("com.nekolr.fish.entity");
+        ParserConfig.getGlobalInstance().addAccept("com.nekolr.fish.service.dto");
+        ParserConfig.getGlobalInstance().addAccept("com.nekolr.fish.security");
+        ParserConfig.getGlobalInstance().addAccept("com.nekolr.fish.vo");
 
         redisTemplate.afterPropertiesSet();
 
         return redisTemplate;
-    }
-
-
-    /**
-     * Redis Value 序列化
-     *
-     * @return
-     */
-    @Bean(name = "jackson2JsonRedisSerializer")
-    public RedisSerializer<Object> jackson2JsonRedisSerializer() {
-        Jackson2JsonRedisSerializer serializer = new Jackson2JsonRedisSerializer(Object.class);
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
-        mapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
-        serializer.setObjectMapper(mapper);
-
-        return serializer;
     }
 
     /**
@@ -155,5 +141,16 @@ public class RedisConfig {
     @Bean(name = "stringRedisSerializer")
     public RedisSerializer<String> stringRedisSerializer() {
         return new StringRedisSerializer();
+    }
+
+
+    /**
+     * Redis Value 序列化
+     *
+     * @return
+     */
+    @Bean(name = "fastJsonRedisSerializer")
+    public RedisSerializer<Object> fastJsonRedisSerializer() {
+        return new FastJsonRedisSerializer<>(Object.class);
     }
 }

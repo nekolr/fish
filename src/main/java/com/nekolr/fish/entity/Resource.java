@@ -1,5 +1,6 @@
 package com.nekolr.fish.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.nekolr.fish.constant.ResourceType;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -13,7 +14,6 @@ import java.util.Set;
 
 @Getter
 @Setter
-@ToString
 @Entity
 @Table(name = "resource")
 public class Resource implements Serializable {
@@ -66,7 +66,19 @@ public class Resource implements Serializable {
      * 角色集合
      */
     @ManyToMany(mappedBy = "resources")
+    @JsonIgnore
     private Set<Role> roles;
 
-
+    @Override
+    public String toString() {
+        return "Resource{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", type=" + type +
+                ", pid=" + pid +
+                ", sort=" + sort +
+                ", createTime=" + createTime +
+                '}';
+    }
 }

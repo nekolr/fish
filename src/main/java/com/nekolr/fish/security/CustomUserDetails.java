@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Date;
+import java.util.stream.Collectors;
 
 /**
  * 自定义 Spring Security UserDetails
@@ -20,6 +21,7 @@ public class CustomUserDetails implements UserDetails {
 
     private static final long serialVersionUID = SpringSecurityCoreVersion.SERIAL_VERSION_UID;
 
+    @JsonIgnore
     private Long id;
     private String username;
     @JsonIgnore
@@ -32,17 +34,14 @@ public class CustomUserDetails implements UserDetails {
     private String avatar;
     private Timestamp createTime;
     private Boolean enabled;
+    @JsonIgnore
     private Date lastPasswordResetTime;
 
     @JsonIgnore
-    private Collection<? extends GrantedAuthority> authorities;
+    private final Collection<? extends GrantedAuthority> authorities;
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
-    }
-
-    @Override
+    @JsonIgnore
     public String getPassword() {
         return password;
     }
@@ -90,9 +89,17 @@ public class CustomUserDetails implements UserDetails {
      *
      * @return
      */
-    @JsonIgnore
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    /**
+     * 获取资源集合
+     *
+     * @return
+     */
+    public Collection getRosources() {
+        return authorities.stream().map(GrantedAuthority::getAuthority).collect(Collectors.toSet());
     }
 }

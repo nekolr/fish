@@ -2,7 +2,6 @@ package com.nekolr.fish.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -16,7 +15,6 @@ import java.sql.Timestamp;
  */
 @Getter
 @Setter
-@ToString
 @Entity
 @Table(name = "job")
 public class Job implements Serializable {
@@ -65,4 +63,16 @@ public class Job implements Serializable {
     @JoinColumn(name = "department_id")
     private Department department;
 
+
+    @Override
+    public String toString() {
+        return "Job{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", createTime=" + createTime +
+                ", enabled=" + enabled +
+                ", sort=" + sort +
+                '}';
+    }
 }
