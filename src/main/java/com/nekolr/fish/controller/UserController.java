@@ -35,6 +35,7 @@ public class UserController {
 
     @Log("创建用户")
     @PostMapping("/users")
+    @PreAuthorize("hasAnyAuthority('USER_ALL', 'USER_POST')")
     public ResponseEntity<UserDTO> createUser(@Validated @RequestBody User user) {
         UserDTO entity = userService.saveUser(user);
         return ResponseEntity.ok(entity);
@@ -42,6 +43,7 @@ public class UserController {
 
     @Log("更新用户信息")
     @PutMapping("/users")
+    @PreAuthorize("hasAnyAuthority('USER_ALL', 'USER_PUT')")
     public ResponseEntity<UserDTO> updateUser(@Validated @RequestBody User user) {
         UserDTO entity = userService.saveUser(user);
         return ResponseEntity.ok(entity);
@@ -49,6 +51,7 @@ public class UserController {
 
     @Log("删除用户")
     @DeleteMapping("/users/{id}")
+    @PreAuthorize("hasAnyAuthority('USER_ALL', 'USER_DELETE')")
     public ResponseEntity deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
         return new ResponseEntity(HttpStatus.OK);

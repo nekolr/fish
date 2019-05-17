@@ -53,7 +53,9 @@ public class RedisConfig {
         return (target, method, params) -> {
             StringBuilder sb = new StringBuilder();
             sb.append(target.getClass().getName());
+            sb.append("-");
             sb.append(method.getName());
+            sb.append("-");
             for (Object obj : params) {
                 sb.append(JSON.toJSONString(obj).hashCode());
             }

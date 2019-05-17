@@ -53,11 +53,6 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     /**
      * 收集用户资源（权限）集合
-     * <p>
-     * 这里不直接使用 user.getRoles() 来获取角色集合而是额外查询一次数据库，
-     * 这么做的原因是如果用户信息是通过缓存获取的，并且如果此时 roles 是空的，那么
-     * 很大可能会触发懒加载机制去查询数据库，而这整个过程 hibernate session 根本就
-     * 没有初始化（没有使用它来查询数据库），所以会报错。
      *
      * @param user
      * @return

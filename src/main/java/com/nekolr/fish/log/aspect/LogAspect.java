@@ -2,6 +2,7 @@ package com.nekolr.fish.log.aspect;
 
 import com.nekolr.fish.constant.LogType;
 import com.nekolr.fish.entity.Log;
+import com.nekolr.fish.exception.BadRequestException;
 import com.nekolr.fish.security.AuthenticationUser;
 import com.nekolr.fish.service.LogService;
 import com.nekolr.fish.util.HttpServletRequestHolder;
@@ -67,7 +68,7 @@ public class LogAspect {
         try {
             result = joinPoint.proceed();
         } catch (Throwable e) {
-            throw new RuntimeException(e);
+            throw new BadRequestException(e.getMessage());
         }
 
         Log log = new Log(LogType.INFO.getValue(), System.currentTimeMillis() - currentTime);

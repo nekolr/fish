@@ -9,6 +9,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.security.SignatureException;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -52,12 +53,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         try {
             // 只判断 token 合法有效，真正的用户信息通过查询数据库得到
             JwtUser jwtUser = JwtUtils.parseJwt(jwt, SignatureAlgorithm.HS512);
-            UserDetails userDetails = userDetailsService.loadUserByUsername(jwtUser.getUsername());
-            UsernamePasswordAuthenticationToken authenticationToken =
-                    new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+            // 只有在 Authentication 为空时才会放入
+            if (ObjectUtils.isEmpty(SecurityContextHolder.getContext().getAuthentication())) {
+                UserDetails userDetails = userDetailsService.loadUserByUsername(jwtUser.getUsername());
+                UsernamePasswordAuthenticationToken authenticationToken =
+                        new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 
-            log.info("Authorized user '{}', setting security context", jwtUser.getUsername());
-            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                log.info("Authorized user '{}', setting security context", jwtUser.getUsername());
+                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+            }
         } catch (ExpiredJwtException e) {
             // token 过期
             log.error("Token has expired: {}" + e);

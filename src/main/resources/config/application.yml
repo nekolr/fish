@@ -20,9 +20,7 @@ spring:
       pool:
         min-idle: 0
         max-active: 8
-        max-wait: 10000
         max-idle: 8
-      shutdown-timeout: 100
   cache:
     redis:
       time-to-live: 1d

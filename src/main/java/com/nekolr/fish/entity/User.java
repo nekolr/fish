@@ -40,7 +40,6 @@ public class User implements Serializable {
     /**
      * 随机盐（用于加密密码）
      */
-    @NotBlank
     private String salt;
 
     /**
