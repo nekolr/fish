@@ -4,6 +4,7 @@ import com.nekolr.fish.entity.User;
 import com.nekolr.fish.log.annotation.Log;
 import com.nekolr.fish.service.UserService;
 import com.nekolr.fish.service.dto.UserDTO;
+import com.nekolr.fish.service.mapper.UserMapper;
 import com.nekolr.fish.service.query.UserQueryService;
 import com.nekolr.fish.vo.PageVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
 
 /**
  * @author nekolr
@@ -25,12 +28,21 @@ public class UserController {
     private UserQueryService userQueryService;
     @Autowired
     private UserService userService;
+    @Resource
+    private UserMapper userMapper;
 
     @Log("获取用户列表")
     @GetMapping("/users")
     @PreAuthorize("hasAnyAuthority('USER_ALL', 'USER_SELECT')")
     public ResponseEntity<PageVO> getUsers(UserDTO userDTO, Pageable pageable) {
         return new ResponseEntity(userQueryService.queryAll(userDTO, pageable), HttpStatus.OK);
+    }
+
+    @Log("获取用户信息")
+    @GetMapping("/users/{username}")
+    @PreAuthorize("hasAnyAuthority('USER_ALL', 'USER_SELECT')")
+    public ResponseEntity<UserDTO> getUser(@PathVariable String username) {
+        return new ResponseEntity(userMapper.toDto(userService.findByUsername(username)), HttpStatus.OK);
     }
 
     @Log("创建用户")
