@@ -1,8 +1,8 @@
 package com.nekolr.fish.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.nekolr.fish.constant.ResourceType;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -12,47 +12,45 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Set;
 
+
+@Entity
 @Getter
 @Setter
-@Entity
-@Table(name = "resource")
-public class Resource implements Serializable {
+@Table(name = "permission")
+public class Permission implements Serializable {
 
     /**
-     * 资源 ID
+     * 权限 ID
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NotNull
     private Long id;
 
     /**
-     * 资源名称
+     * 权限名称
      */
     @NotBlank
     private String name;
 
     /**
-     * 资源描述
+     * 上级权限
+     */
+    @NotNull
+    @Column(name = "pid", nullable = false)
+    private Long pid;
+
+    /**
+     * 描述
      */
     private String description;
 
     /**
-     * 资源类型
+     * 角色集合
      */
-    @Enumerated(EnumType.STRING)
-    private ResourceType type;
-
-    /**
-     * 上级 ID
-     */
-    @NotNull
-    private Long pid;
-
-    /**
-     * 排序字段，数字越大越靠后
-     */
-    @NotNull
-    private Long sort;
+    @JsonIgnore
+    @ManyToMany(mappedBy = "permissions")
+    private Set<Role> roles;
 
     /**
      * 创建时间
@@ -61,23 +59,19 @@ public class Resource implements Serializable {
     @Column(name = "create_time")
     private Timestamp createTime;
 
-
     /**
-     * 角色集合
+     * 排序字段，数字越大越靠后
      */
-    @ManyToMany(mappedBy = "resources")
-    @JsonIgnore
-    private Set<Role> roles;
+    @NotNull
+    private Long sort;
 
     @Override
     public String toString() {
-        return "Resource{" +
+        return "Permission{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", type=" + type +
                 ", pid=" + pid +
-                ", sort=" + sort +
+                ", description='" + description + '\'' +
                 ", createTime=" + createTime +
                 '}';
     }

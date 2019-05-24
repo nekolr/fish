@@ -68,8 +68,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 // OPTIONS 预检请求可以匿名访问
                 .antMatchers(HttpMethod.OPTIONS, "/**").anonymous()
-                // 登录请求不拦截
-                .antMatchers("/auth/login").permitAll()
+                // 登录请求不拦截（如果登录请求头包含 Authorization: Bearer 任意字符，那么还是会进行校验）
+                .antMatchers(HttpMethod.POST, "/auth/login").permitAll()
                 .antMatchers("/swagger-ui.html").anonymous()
                 .antMatchers("/swagger-resources/**").anonymous()
                 // 所有请求都要经过验证

@@ -36,8 +36,8 @@ public class AuthorityService {
     public Collection<GrantedAuthority> mapToGrantedAuthorities(User user) {
         Set<Role> roles = roleRepository.findByUsers_Id(user.getId());
 
-        return roles.stream().flatMap(role -> role.getResources().stream())
-                .map(resource -> new SimpleGrantedAuthority(resource.getName()))
+        return roles.stream().flatMap(role -> role.getPermissions().stream())
+                .map(permission -> new SimpleGrantedAuthority(permission.getName()))
                 .collect(Collectors.toList());
     }
 }

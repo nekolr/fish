@@ -1,39 +1,35 @@
 package com.nekolr.fish.service.dto;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
 
-/**
- * @author nekolr
- */
-@Data
-public class ResourceDTO implements Serializable {
+@Getter
+@Setter
+public class PermissionDTO implements Serializable {
 
     private Long id;
 
     private String name;
 
+    private Long pid;
+
     private String description;
-
-    private List<ResourceDTO> children;
-
-    private String type;
-
-    private Long sort;
 
     private Timestamp createTime;
 
+    private List<PermissionDTO> children;
+
     @Override
     public String toString() {
-        return "ResourceDTO{" +
+        return "PermissionDTO{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", pid=" + pid +
                 ", description='" + description + '\'' +
-                ", type='" + type + '\'' +
-                ", sort=" + sort +
                 ", createTime=" + createTime +
                 '}';
     }

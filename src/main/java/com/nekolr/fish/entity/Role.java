@@ -9,6 +9,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Objects;
 import java.util.Set;
 
 @Getter
@@ -51,17 +52,29 @@ public class Role implements Serializable {
     private Long sort;
 
     /**
-     * 资源集合
+     * 用户集合
      */
     @ManyToMany(mappedBy = "roles")
     @JsonIgnore
     private Set<User> users;
 
+    /**
+     * 菜单集合
+     */
     @ManyToMany
-    @JoinTable(name = "role_resource",
+    @JoinTable(name = "role_menu",
             joinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "resource_id", referencedColumnName = "id")})
-    private Set<Resource> resources;
+            inverseJoinColumns = {@JoinColumn(name = "menu_id", referencedColumnName = "id")})
+    private Set<Menu> menus;
+
+    /**
+     * 权限集合
+     */
+    @ManyToMany
+    @JoinTable(name = "role_permission",
+            joinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "permission_id", referencedColumnName = "id")})
+    private Set<Permission> permissions;
 
 
     @Override
@@ -73,5 +86,18 @@ public class Role implements Serializable {
                 ", createTime=" + createTime +
                 ", sort=" + sort +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Role role = (Role) o;
+        return Objects.equals(id, role.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

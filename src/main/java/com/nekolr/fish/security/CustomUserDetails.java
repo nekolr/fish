@@ -99,7 +99,7 @@ public class CustomUserDetails implements UserDetails {
      *
      * @return
      */
-    public Collection getRosources() {
+    public Collection getPermissions() {
         return authorities.stream().map(GrantedAuthority::getAuthority).collect(Collectors.toSet());
     }
 }

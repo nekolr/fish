@@ -3,10 +3,7 @@ package com.nekolr.fish.security.filter;
 import com.nekolr.fish.constant.Fish;
 import com.nekolr.fish.util.JwtUtils;
 import com.nekolr.fish.security.JwtUser;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.MalformedJwtException;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.UnsupportedJwtException;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.SignatureException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
@@ -64,19 +61,22 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }
         } catch (ExpiredJwtException e) {
             // token 过期
-            log.error("Token has expired: {}" + e);
+            log.error("Token has expired: {}", e.getMessage());
         } catch (UnsupportedJwtException e) {
             // token 格式错误
-            log.error("Token format error: {}" + e);
+            log.error("Token format error: {}", e.getMessage());
         } catch (MalformedJwtException e) {
             // token 构造错误
-            log.error("Token construct error: {}" + e);
+            log.error("Token construct error: {}", e.getMessage());
         } catch (SignatureException e) {
             // 签名失败
-            log.error("Signature failed: {}" + e);
+            log.error("Signature failed: {}", e.getMessage());
         } catch (IllegalArgumentException e) {
             // 非法参数
-            log.error("Illegal argument: {}" + e);
+            log.error("Illegal argument: {}", e.getMessage());
+        } catch (JwtException e) {
+            // 其他异常
+            log.error("Other exception: {}", e.getMessage());
         }
         chain.doFilter(request, response);
     }

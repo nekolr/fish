@@ -1,15 +1,14 @@
 package com.nekolr.fish.service.dto;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Set;
 
-/**
- * @author nekolr
- */
-@Data
+@Getter
+@Setter
 public class RoleDTO implements Serializable {
 
     private Long id;
@@ -22,7 +21,9 @@ public class RoleDTO implements Serializable {
 
     private Long sort;
 
-    private Set<ResourceDTO> resources;
+    private Set<PermissionDTO> permissions;
+
+    private Set<MenuDTO> menus;
 
     @Override
     public String toString() {
