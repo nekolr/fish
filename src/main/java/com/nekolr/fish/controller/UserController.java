@@ -6,6 +6,7 @@ import com.nekolr.fish.service.UserService;
 import com.nekolr.fish.service.dto.UserDTO;
 import com.nekolr.fish.service.mapper.UserMapper;
 import com.nekolr.fish.service.query.UserQueryService;
+import com.nekolr.fish.util.SecurityContextHolder;
 import com.nekolr.fish.vo.PageVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 
 /**
+ * 用户控制器
+ *
  * @author nekolr
  */
 @RestController
@@ -43,6 +46,13 @@ public class UserController {
     @PreAuthorize("hasAnyAuthority('USER_ALL', 'USER_SELECT')")
     public ResponseEntity<UserDTO> getUser(@PathVariable String username) {
         return new ResponseEntity(userMapper.toDto(userService.findByUsername(username)), HttpStatus.OK);
+    }
+
+    @Log("获取当前用户信息")
+    @GetMapping("/user")
+    @PreAuthorize("hasAnyAuthority('USER_ALL', 'USER_SELECT')")
+    public ResponseEntity<UserDTO> getCurrentUser() {
+        return new ResponseEntity(userMapper.toDto(userService.findByUsername(SecurityContextHolder.getUserDetails().getUsername())), HttpStatus.OK);
     }
 
     @Log("创建用户")

@@ -46,7 +46,7 @@ public class AuthController {
         }
 
         // 校验完成后签发 Token
-        String token = JwtUtils.issueJwt(IdGenerator.randomUUID(), authUser.getUsername(), Fish.JWT_ISSUER, Fish.JWT_PERIOD, "", SignatureAlgorithm.HS512);
+        String token = JwtUtils.issueJwt(IdGenerator.randomUUID(), authUser.getUsername(), Fish.JWT_ISSUER, Fish.JWT_PERIOD >> 2, "", SignatureAlgorithm.HS512);
 
         return ResponseEntity.ok(new AuthenticationInfo(token, user));
     }
