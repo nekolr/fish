@@ -27,4 +27,9 @@ public class MenuServiceImpl implements MenuService {
     public List<MenuDTO> findAllByRoleId(Long id) {
         return menuRepository.findAllByRoles_Id(id).stream().map(menu -> menuMapper.toDto(menu)).collect(Collectors.toList());
     }
+
+    @Override
+    public List<MenuDTO> findAllByRoleIds(List<Long> ids) {
+        return menuRepository.findAllByRoleIds(ids).stream().map(menu -> menuMapper.toDto(menu)).collect(Collectors.toList());
+    }
 }

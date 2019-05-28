@@ -2,9 +2,6 @@
 spring:
   application:
     name: fish
-  # profile active dev
-  profiles:
-    active: dev
   jackson:
     time-zone: GMT+8
   jpa:
@@ -25,7 +22,13 @@ spring:
     redis:
       time-to-live: 1d
       cache-null-values: false
-
+  data:
+    redis:
+      repositories:
+        enabled: false
+  # profile active dev
+  profiles:
+    active: dev
 
 # tomcat
 server:

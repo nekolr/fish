@@ -45,11 +45,6 @@ public class Menu implements Serializable {
     private String path;
 
     /**
-     * 对应前端组件
-     */
-    private String component;
-
-    /**
      * 图标
      */
     private String icon;
@@ -87,7 +82,6 @@ public class Menu implements Serializable {
                 ", name='" + name + '\'' +
                 ", sort=" + sort +
                 ", path='" + path + '\'' +
-                ", component='" + component + '\'' +
                 ", icon='" + icon + '\'' +
                 ", pid=" + pid +
                 ", outside=" + outside +

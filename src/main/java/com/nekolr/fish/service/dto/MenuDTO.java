@@ -19,8 +19,6 @@ public class MenuDTO implements Serializable {
 
     private String path;
 
-    private String component;
-
     private Long pid;
 
     private Boolean outside;
@@ -38,7 +36,6 @@ public class MenuDTO implements Serializable {
                 ", name='" + name + '\'' +
                 ", sort=" + sort +
                 ", path='" + path + '\'' +
-                ", component='" + component + '\'' +
                 ", pid=" + pid +
                 ", outside=" + outside +
                 ", icon='" + icon + '\'' +

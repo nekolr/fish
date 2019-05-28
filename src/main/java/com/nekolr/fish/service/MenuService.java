@@ -17,4 +17,13 @@ public interface MenuService {
      */
     @Cacheable(key = "'loadMenuListByRoleId:' + #p0")
     List<MenuDTO> findAllByRoleId(Long id);
+
+    /**
+     * 根据角色 ID 集合查询菜单列表
+     *
+     * @param ids
+     * @return
+     */
+    @Cacheable(keyGenerator = "keyGenerator")
+    List<MenuDTO> findAllByRoleIds(List<Long> ids);
 }
