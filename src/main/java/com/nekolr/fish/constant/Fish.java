@@ -26,11 +26,6 @@ public class Fish {
     public static final String TOKEN_HEADER_KEY = "Authorization";
 
     /**
-     * 错误返回消息：没有凭证
-     */
-    public static final String ERROR_MSG_UNAUTHORIZED = "Unauthorized";
-
-    /**
      * 加密私钥（当判断私钥有泄漏的风险时请修改它）
      */
     public static final String JWT_SECRET = ":xgj%eMd#gk+wh.`t2;XW!.dIuC&$#Lua+;%~!F=" +

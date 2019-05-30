@@ -3,6 +3,7 @@ package com.nekolr.fish.security.service;
 import com.nekolr.fish.entity.User;
 import com.nekolr.fish.security.CustomUserDetails;
 import com.nekolr.fish.service.UserService;
+import com.nekolr.fish.util.I18nUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -28,6 +29,8 @@ public class CustomUserDetailsService implements UserDetailsService {
     private UserService userService;
     @Autowired
     private AuthorityService authorityService;
+    @Autowired
+    private I18nUtils i18nUtils;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -35,7 +38,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         // 用户不存在
         if (ObjectUtils.isEmpty(user)) {
-            throw new UsernameNotFoundException("Username [ " + username + " ] not found");
+            throw new UsernameNotFoundException(i18nUtils.getMessage("exceptions.username_not_found", new Object[]{username}));
         }
 
         return new CustomUserDetails(

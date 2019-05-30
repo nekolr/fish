@@ -1,6 +1,7 @@
 package com.nekolr.fish.security;
 
-import com.nekolr.fish.constant.Fish;
+import com.nekolr.fish.util.I18nUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
@@ -15,6 +16,10 @@ import java.io.Serializable;
  */
 @Component
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint, Serializable {
+
+    @Autowired
+    private I18nUtils i18nUtils;
+
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response,
                          AuthenticationException authException) throws IOException {
@@ -23,6 +28,6 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint, Se
          * 当用户尝试访问安全的 REST 资源而不提供任何凭证时，将调用此方法发送 401
          */
         response.sendError(HttpServletResponse.SC_UNAUTHORIZED,
-                authException == null ? Fish.ERROR_MSG_UNAUTHORIZED : authException.getMessage());
+                authException == null ? i18nUtils.getMessage("exceptions.unauthorized") : authException.getMessage());
     }
 }

@@ -5,9 +5,9 @@ import com.nekolr.fish.entity.Log;
 import com.nekolr.fish.exception.BadRequestException;
 import com.nekolr.fish.security.AuthenticationUser;
 import com.nekolr.fish.service.LogService;
+import com.nekolr.fish.util.FishSecurityContextHolder;
 import com.nekolr.fish.util.HttpServletRequestHolder;
 import com.nekolr.fish.util.IpUtils;
-import com.nekolr.fish.util.SecurityContextHolder;
 import com.nekolr.fish.util.ThrowableUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -36,6 +36,8 @@ public class LogAspect {
 
     @Autowired
     private LogService logService;
+    @Autowired
+    private FishSecurityContextHolder securityContextHolder;
 
     /**
      * 登录方法名
@@ -115,7 +117,7 @@ public class LogAspect {
         String username;
         if (!LOGIN_METHOD_NAME.equals(methodSignature.getName())) {
             // 如果不是登录方法，则可以直接获取用户信息
-            UserDetails userDetails = SecurityContextHolder.getUserDetails();
+            UserDetails userDetails = securityContextHolder.getUserDetails();
             username = userDetails.getUsername();
         } else {
             // 如果是登录方法，则需要通过方法参数来获取用户信息

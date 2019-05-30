@@ -5,8 +5,8 @@ import com.nekolr.fish.log.annotation.Log;
 import com.nekolr.fish.service.MenuService;
 import com.nekolr.fish.service.RoleService;
 import com.nekolr.fish.service.dto.MenuDTO;
+import com.nekolr.fish.util.FishSecurityContextHolder;
 import com.nekolr.fish.util.MenuUtils;
-import com.nekolr.fish.util.SecurityContextHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,12 +32,14 @@ public class MenuController {
     private MenuService menuService;
     @Autowired
     private RoleService roleService;
+    @Autowired
+    private FishSecurityContextHolder securityContextHolder;
 
     @Log("获取菜单列表")
     @GetMapping("/menu")
     @PreAuthorize("hasAnyAuthority('MENU_ALL', 'MENU_SELECT')")
     public ResponseEntity<List<MenuDTO>> getCurrentUserMenuList() {
-        List<Role> roleSet = roleService.findByUsername(SecurityContextHolder.getUserDetails().getUsername());
+        List<Role> roleSet = roleService.findByUsername(securityContextHolder.getUserDetails().getUsername());
         if (roleSet.size() > 0) {
             List<Long> roleIds = roleSet.stream().map(role -> role.getId()).collect(Collectors.toList());
             return new ResponseEntity(MenuUtils.menus2Tree(menuService.findAllByRoleIds(roleIds)), HttpStatus.OK);

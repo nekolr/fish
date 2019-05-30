@@ -4,9 +4,11 @@ spring:
     name: fish
   jackson:
     time-zone: GMT+8
+  # spring jpa
   jpa:
     database-platform: org.hibernate.dialect.MySQL57Dialect
     open-in-view: true
+  # spring redis
   redis:
     database: 0
     host: 127.0.0.1
@@ -18,10 +20,12 @@ spring:
         min-idle: 1
         max-active: 8
         max-idle: 8
+  # spring cache
   cache:
     redis:
       time-to-live: 1d
       cache-null-values: false
+  # spring data
   data:
     redis:
       repositories:
@@ -29,6 +33,9 @@ spring:
   # profile active dev
   profiles:
     active: dev
+  # i18n
+  messages:
+    basename: i18n/messages
 
 # tomcat
 server:

@@ -5,6 +5,7 @@ import com.nekolr.fish.log.annotation.Log;
 import com.nekolr.fish.security.AuthenticationInfo;
 import com.nekolr.fish.security.CustomUserDetails;
 import com.nekolr.fish.util.EncryptUtils;
+import com.nekolr.fish.util.I18nUtils;
 import com.nekolr.fish.util.IdGenerator;
 import com.nekolr.fish.util.JwtUtils;
 import com.nekolr.fish.security.AuthenticationUser;
@@ -30,6 +31,8 @@ public class AuthController {
     @Autowired
     @Qualifier("customUserDetailsService")
     private UserDetailsService userDetailsService;
+    @Autowired
+    private I18nUtils i18nUtils;
 
     @Log("用户登录")
     @PostMapping("/login")
@@ -38,11 +41,11 @@ public class AuthController {
         CustomUserDetails user = (CustomUserDetails) userDetailsService.loadUserByUsername(authUser.getUsername());
 
         if (!user.getPassword().equals(EncryptUtils.md5(authUser.getPassword() + user.getSalt()))) {
-            throw new AccountExpiredException("Incorrect username or password");
+            throw new AccountExpiredException(i18nUtils.getMessage("exceptions.invalid_username_or_password"));
         }
 
         if (!user.getEnabled()) {
-            throw new AccountExpiredException("Account has been disabled");
+            throw new AccountExpiredException(i18nUtils.getMessage("exceptions.account_disabled"));
         }
 
         // 校验完成后签发 Token

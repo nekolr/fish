@@ -6,7 +6,7 @@ import com.nekolr.fish.service.UserService;
 import com.nekolr.fish.service.dto.UserDTO;
 import com.nekolr.fish.service.mapper.UserMapper;
 import com.nekolr.fish.service.query.UserQueryService;
-import com.nekolr.fish.util.SecurityContextHolder;
+import com.nekolr.fish.util.FishSecurityContextHolder;
 import com.nekolr.fish.vo.PageVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -33,6 +33,8 @@ public class UserController {
     private UserService userService;
     @Resource
     private UserMapper userMapper;
+    @Autowired
+    private FishSecurityContextHolder securityContextHolder;
 
     @Log("获取用户列表")
     @GetMapping("/users")
@@ -52,7 +54,7 @@ public class UserController {
     @GetMapping("/user")
     @PreAuthorize("hasAnyAuthority('USER_ALL', 'USER_SELECT')")
     public ResponseEntity<UserDTO> getCurrentUser() {
-        return new ResponseEntity(userMapper.toDto(userService.findByUsername(SecurityContextHolder.getUserDetails().getUsername())), HttpStatus.OK);
+        return new ResponseEntity(userMapper.toDto(userService.findByUsername(securityContextHolder.getUserDetails().getUsername())), HttpStatus.OK);
     }
 
     @Log("创建用户")
