@@ -1,6 +1,6 @@
 package com.nekolr.fish.security;
 
-import com.nekolr.fish.util.I18nUtils;
+import com.nekolr.fish.support.I18nUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;

@@ -3,7 +3,7 @@ package com.nekolr.fish.security.service;
 import com.nekolr.fish.entity.User;
 import com.nekolr.fish.security.CustomUserDetails;
 import com.nekolr.fish.service.UserService;
-import com.nekolr.fish.util.I18nUtils;
+import com.nekolr.fish.support.I18nUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;

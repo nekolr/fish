@@ -1,4 +1,4 @@
-package com.nekolr.fish.util;
+package com.nekolr.fish.support;
 
 import cn.hutool.core.lang.Assert;
 import org.springframework.beans.factory.annotation.Autowired;

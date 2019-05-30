@@ -6,7 +6,7 @@ import com.nekolr.fish.service.UserService;
 import com.nekolr.fish.service.dto.UserDTO;
 import com.nekolr.fish.service.mapper.UserMapper;
 import com.nekolr.fish.service.query.UserQueryService;
-import com.nekolr.fish.util.FishSecurityContextHolder;
+import com.nekolr.fish.support.FishSecurityContextHolder;
 import com.nekolr.fish.vo.PageVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;

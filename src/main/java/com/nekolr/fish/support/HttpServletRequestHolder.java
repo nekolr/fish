@@ -1,4 +1,4 @@
-package com.nekolr.fish.util;
+package com.nekolr.fish.support;
 
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;

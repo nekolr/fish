@@ -1,4 +1,4 @@
-package com.nekolr.fish.util;
+package com.nekolr.fish.support;
 
 import com.nekolr.fish.exception.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -6,6 +6,7 @@ import com.nekolr.fish.exception.EntityExistException;
 import com.nekolr.fish.service.UserService;
 import com.nekolr.fish.service.dto.UserDTO;
 import com.nekolr.fish.service.mapper.UserMapper;
+import com.nekolr.fish.support.MessageGenerator;
 import com.nekolr.fish.util.EncryptUtils;
 import com.nekolr.fish.util.RandomUtils;
 import org.apache.commons.lang3.ObjectUtils;
@@ -28,6 +29,8 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
     @Resource
     private UserMapper userMapper;
+    @Autowired
+    private MessageGenerator messageGenerator;
 
     @Override
     public User findByUsername(String username) {
@@ -39,15 +42,15 @@ public class UserServiceImpl implements UserService {
     public UserDTO saveUser(User source) {
 
         if (ObjectUtils.isNotEmpty(userRepository.findByUsername(source.getUsername()))) {
-            throw new EntityExistException(User.class, "username", source.getUsername());
+            throw new EntityExistException(messageGenerator.generateEntityExistMessage(User.class, "username", source.getUsername()));
         }
 
         if (StringUtils.isNotBlank(source.getEmail()) && ObjectUtils.isNotEmpty(userRepository.findByEmail(source.getEmail()))) {
-            throw new EntityExistException(User.class, "email", source.getEmail());
+            throw new EntityExistException(messageGenerator.generateEntityExistMessage(User.class, "email", source.getEmail()));
         }
 
         if (StringUtils.isNotBlank(source.getPhone()) && ObjectUtils.isNotEmpty(userRepository.findByPhone(source.getPhone()))) {
-            throw new EntityExistException(User.class, "phone", source.getPhone());
+            throw new EntityExistException(messageGenerator.generateEntityExistMessage(User.class, "phone", source.getPhone()));
         }
 
         // 生成盐

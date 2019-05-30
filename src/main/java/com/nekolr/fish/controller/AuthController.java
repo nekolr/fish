@@ -5,7 +5,7 @@ import com.nekolr.fish.log.annotation.Log;
 import com.nekolr.fish.security.AuthenticationInfo;
 import com.nekolr.fish.security.CustomUserDetails;
 import com.nekolr.fish.util.EncryptUtils;
-import com.nekolr.fish.util.I18nUtils;
+import com.nekolr.fish.support.I18nUtils;
 import com.nekolr.fish.util.IdGenerator;
 import com.nekolr.fish.util.JwtUtils;
 import com.nekolr.fish.security.AuthenticationUser;

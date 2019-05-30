@@ -5,7 +5,7 @@ import com.nekolr.fish.log.annotation.Log;
 import com.nekolr.fish.service.MenuService;
 import com.nekolr.fish.service.RoleService;
 import com.nekolr.fish.service.dto.MenuDTO;
-import com.nekolr.fish.util.FishSecurityContextHolder;
+import com.nekolr.fish.support.FishSecurityContextHolder;
 import com.nekolr.fish.util.MenuUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
