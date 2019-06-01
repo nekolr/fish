@@ -10,7 +10,6 @@ import com.nekolr.fish.util.MenuUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,8 +35,7 @@ public class MenuController {
     private FishSecurityContextHolder securityContextHolder;
 
     @Log("获取菜单列表")
-    @GetMapping("/menu")
-    @PreAuthorize("hasAnyAuthority('MENU_ALL', 'MENU_SELECT')")
+    @GetMapping("/currentUserMenus")
     public ResponseEntity<List<MenuDTO>> getCurrentUserMenuList() {
         List<Role> roleSet = roleService.findByUsername(securityContextHolder.getUserDetails().getUsername());
         if (roleSet.size() > 0) {

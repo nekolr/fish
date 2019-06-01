@@ -7,9 +7,9 @@ import com.nekolr.fish.service.dto.UserDTO;
 import com.nekolr.fish.service.mapper.UserMapper;
 import com.nekolr.fish.service.query.UserQueryService;
 import com.nekolr.fish.support.FishSecurityContextHolder;
+import com.nekolr.fish.support.PageRequest;
 import com.nekolr.fish.vo.PageVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -39,8 +39,8 @@ public class UserController {
     @Log("获取用户列表")
     @GetMapping("/users")
     @PreAuthorize("hasAnyAuthority('USER_ALL', 'USER_SELECT')")
-    public ResponseEntity<PageVO> getUsers(UserDTO userDTO, Pageable pageable) {
-        return new ResponseEntity(userQueryService.queryAll(userDTO, pageable), HttpStatus.OK);
+    public ResponseEntity<PageVO> getUsers(UserDTO userDTO, PageRequest pageRequest) {
+        return new ResponseEntity(userQueryService.queryAll(userDTO, pageRequest.toPageable()), HttpStatus.OK);
     }
 
     @Log("获取用户信息")
@@ -51,8 +51,7 @@ public class UserController {
     }
 
     @Log("获取当前用户信息")
-    @GetMapping("/user")
-    @PreAuthorize("hasAnyAuthority('USER_ALL', 'USER_SELECT')")
+    @GetMapping("/currentUser")
     public ResponseEntity<UserDTO> getCurrentUser() {
         return new ResponseEntity(userMapper.toDto(userService.findByUsername(securityContextHolder.getUserDetails().getUsername())), HttpStatus.OK);
     }

@@ -58,17 +58,17 @@ public class UserQueryService {
 
             if (StringUtils.isNotBlank(user.getUsername())) {
                 // 模糊匹配 username
-                predicates.add(cb.like(root.get("username").as(String.class), "%" + user.getUsername()));
+                predicates.add(cb.like(root.get("username").as(String.class), "%" + user.getUsername() + "%"));
             }
 
             if (StringUtils.isNotBlank(user.getEmail())) {
                 // 模糊匹配 email
-                predicates.add(cb.like(root.get("email").as(String.class), "%" + user.getEmail()));
+                predicates.add(cb.like(root.get("email").as(String.class), "%" + user.getEmail() + "%"));
             }
 
             if (StringUtils.isNotBlank(user.getPhone())) {
                 // 模糊匹配 phone
-                predicates.add(cb.like(root.get("phone").as(String.class), "%" + user.getPhone()));
+                predicates.add(cb.like(root.get("phone").as(String.class), "%" + user.getPhone() + "%"));
             }
 
             if (ObjectUtils.isNotEmpty(user.getEnabled())) {
