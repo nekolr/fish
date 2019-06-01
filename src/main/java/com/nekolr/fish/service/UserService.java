@@ -18,8 +18,17 @@ public interface UserService {
      * @param username
      * @return
      */
-    @Cacheable(key = "#p0")
+    @Cacheable(key = "'username:' + #p0")
     User findByUsername(String username);
+
+    /**
+     * 根据 ID 查询
+     *
+     * @param id
+     * @return
+     */
+    @Cacheable(key = "'id:' + #p0")
+    User findById(Long id);
 
     /**
      * 保存用户

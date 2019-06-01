@@ -38,6 +38,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User findById(Long id) {
+        return userRepository.findById(id).get();
+    }
+
+    @Override
     @Transactional(rollbackFor = Exception.class)
     public UserDTO saveUser(User source) {
 

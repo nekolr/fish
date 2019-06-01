@@ -38,6 +38,16 @@ public class User implements Serializable {
     private String password;
 
     /**
+     * 性别
+     */
+    private Integer gender;
+
+    /**
+     * 年龄
+     */
+    private Integer age;
+
+    /**
      * 随机盐（用于加密密码）
      */
     private String salt;
@@ -111,6 +121,8 @@ public class User implements Serializable {
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
+                ", gender='" + gender + '\'' +
+                ", age=" + age +
                 ", salt='" + salt + '\'' +
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +

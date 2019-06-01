@@ -31,6 +31,10 @@ public class UserDTO implements Serializable {
 
     private String email;
 
+    private Integer gender;
+
+    private Integer age;
+
     private String phone;
 
     private Boolean enabled;
@@ -53,9 +57,13 @@ public class UserDTO implements Serializable {
         return "UserDTO{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", salt='" + salt + '\'' +
                 ", realName='" + realName + '\'' +
                 ", avatar='" + avatar + '\'' +
                 ", email='" + email + '\'' +
+                ", gender='" + gender + '\'' +
+                ", age=" + age +
                 ", phone='" + phone + '\'' +
                 ", enabled=" + enabled +
                 ", createTime=" + createTime +

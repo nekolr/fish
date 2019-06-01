@@ -9,6 +9,7 @@ import com.nekolr.fish.service.query.UserQueryService;
 import com.nekolr.fish.support.FishSecurityContextHolder;
 import com.nekolr.fish.support.PageRequest;
 import com.nekolr.fish.vo.PageVO;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,10 +45,14 @@ public class UserController {
     }
 
     @Log("获取用户信息")
-    @GetMapping("/users/{username}")
+    @GetMapping("/users/{usernameOrId}")
     @PreAuthorize("hasAnyAuthority('USER_ALL', 'USER_SELECT')")
-    public ResponseEntity<UserDTO> getUser(@PathVariable String username) {
-        return new ResponseEntity(userMapper.toDto(userService.findByUsername(username)), HttpStatus.OK);
+    public ResponseEntity<UserDTO> getUser(@PathVariable String usernameOrId) {
+        if (NumberUtils.isDigits(usernameOrId)) {
+            return new ResponseEntity(userMapper.toDto(userService.findById(Long.valueOf(usernameOrId))), HttpStatus.OK);
+        } else {
+            return new ResponseEntity(userMapper.toDto(userService.findByUsername(usernameOrId)), HttpStatus.OK);
+        }
     }
 
     @Log("获取当前用户信息")
