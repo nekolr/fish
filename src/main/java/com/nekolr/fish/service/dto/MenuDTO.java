@@ -3,15 +3,11 @@ package com.nekolr.fish.service.dto;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.List;
 
 @Getter
 @Setter
-public class MenuDTO implements Serializable {
-
-    private Long id;
+public class MenuDTO extends CommonDTO {
 
     private String name;
 
@@ -19,13 +15,9 @@ public class MenuDTO implements Serializable {
 
     private String path;
 
-    private Long pid;
-
     private Boolean outside;
 
     private String icon;
-
-    private List<MenuDTO> children;
 
     private Timestamp createTime;
 

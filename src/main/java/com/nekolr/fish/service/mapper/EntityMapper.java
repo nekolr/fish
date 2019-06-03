@@ -1,4 +1,4 @@
-package com.nekolr.fish.service;
+package com.nekolr.fish.service.mapper;
 
 
 /**

@@ -3,6 +3,7 @@ package com.nekolr.fish.service.impl;
 
 import com.nekolr.fish.dao.MenuRepository;
 import com.nekolr.fish.service.MenuService;
+import com.nekolr.fish.service.dto.CommonDTO;
 import com.nekolr.fish.service.dto.MenuDTO;
 import com.nekolr.fish.service.mapper.MenuMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public List<MenuDTO> findAllByRoleIds(List<Long> ids) {
+    public List<CommonDTO> findAllByRoleIds(List<Long> ids) {
         return menuRepository.findAllByRoleIds(ids).stream().map(menu -> menuMapper.toDto(menu)).collect(Collectors.toList());
     }
 }

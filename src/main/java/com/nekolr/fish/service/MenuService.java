@@ -1,5 +1,6 @@
 package com.nekolr.fish.service;
 
+import com.nekolr.fish.service.dto.CommonDTO;
 import com.nekolr.fish.service.dto.MenuDTO;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
@@ -25,5 +26,5 @@ public interface MenuService {
      * @return
      */
     @Cacheable(keyGenerator = "keyGenerator")
-    List<MenuDTO> findAllByRoleIds(List<Long> ids);
+    List<CommonDTO> findAllByRoleIds(List<Long> ids);
 }

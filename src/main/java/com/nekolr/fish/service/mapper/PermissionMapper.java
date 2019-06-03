@@ -1,7 +1,6 @@
 package com.nekolr.fish.service.mapper;
 
 import com.nekolr.fish.entity.Permission;
-import com.nekolr.fish.service.EntityMapper;
 import com.nekolr.fish.service.dto.PermissionDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;

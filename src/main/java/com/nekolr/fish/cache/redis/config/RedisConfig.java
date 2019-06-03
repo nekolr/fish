@@ -13,6 +13,7 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -57,7 +58,12 @@ public class RedisConfig {
             sb.append(method.getName());
             sb.append("-");
             for (Object obj : params) {
-                sb.append(JSON.toJSONString(obj).hashCode());
+                // TODO: 目前暂时使用该方式来处理分页请求参数
+                if (obj instanceof PageRequest) {
+                    sb.append(obj.hashCode());
+                } else {
+                    sb.append(JSON.toJSONString(obj).hashCode());
+                }
             }
             return sb.toString();
         };

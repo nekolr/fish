@@ -6,7 +6,7 @@ import com.nekolr.fish.service.MenuService;
 import com.nekolr.fish.service.RoleService;
 import com.nekolr.fish.service.dto.MenuDTO;
 import com.nekolr.fish.support.FishSecurityContextHolder;
-import com.nekolr.fish.util.MenuUtils;
+import com.nekolr.fish.util.TreeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,7 +40,7 @@ public class MenuController {
         List<Role> roleSet = roleService.findByUsername(securityContextHolder.getUserDetails().getUsername());
         if (roleSet.size() > 0) {
             List<Long> roleIds = roleSet.stream().map(role -> role.getId()).collect(Collectors.toList());
-            return new ResponseEntity(MenuUtils.menus2Tree(menuService.findAllByRoleIds(roleIds)), HttpStatus.OK);
+            return new ResponseEntity(TreeUtils.toTree(menuService.findAllByRoleIds(roleIds)), HttpStatus.OK);
         } else {
             return new ResponseEntity(new ArrayList(), HttpStatus.OK);
         }
