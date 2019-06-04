@@ -70,6 +70,9 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void deleteUser(Long id) {
-        userRepository.deleteById(id);
+        // 1 号管理员无法删除
+        if (!id.equals(1L)) {
+            userRepository.deleteById(id);
+        }
     }
 }
