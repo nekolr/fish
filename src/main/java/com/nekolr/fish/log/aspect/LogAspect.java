@@ -9,6 +9,7 @@ import com.nekolr.fish.support.FishSecurityContextHolder;
 import com.nekolr.fish.support.HttpServletRequestHolder;
 import com.nekolr.fish.util.IpUtils;
 import com.nekolr.fish.util.ThrowableUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
@@ -32,6 +33,7 @@ import java.lang.reflect.Method;
  */
 @Component
 @Aspect
+@Slf4j
 public class LogAspect {
 
     @Autowired
@@ -70,6 +72,8 @@ public class LogAspect {
         try {
             result = joinPoint.proceed();
         } catch (Throwable e) {
+            // LOG 用于定位错误
+            log.error(e.getMessage(), e);
             throw new BadRequestException(e.getMessage());
         }
 

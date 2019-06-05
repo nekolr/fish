@@ -68,6 +68,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserDTO updateUser(User source) {
+        User user = userRepository.save(source);
+        return userMapper.toDto(user);
+    }
+
+    @Override
     @Transactional(rollbackFor = Exception.class)
     public void deleteUser(Long id) {
         // 1 号管理员无法删除

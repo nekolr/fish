@@ -5,6 +5,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
@@ -15,8 +17,10 @@ import java.util.Set;
 public class UserDTO implements Serializable {
 
     @ApiModelProperty(hidden = true)
+    @NotNull
     private Long id;
 
+    @NotBlank
     private String username;
 
     @JsonIgnore

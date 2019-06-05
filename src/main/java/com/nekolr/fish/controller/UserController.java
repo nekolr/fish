@@ -72,9 +72,12 @@ public class UserController {
     @Log("更新用户信息")
     @PutMapping("/users")
     @PreAuthorize("hasAnyAuthority('USER_ALL', 'USER_PUT')")
-    public ResponseEntity<UserDTO> updateUser(@Validated @RequestBody User user) {
-        UserDTO entity = userService.saveUser(user);
-        return ResponseEntity.ok(entity);
+    public ResponseEntity<UserDTO> updateUser(@Validated @RequestBody UserDTO user) {
+        User entity = userService.findById(user.getId());
+        user.setPassword(entity.getPassword());
+        user.setSalt(entity.getSalt());
+        UserDTO result = userService.updateUser(userMapper.toEntity(user));
+        return ResponseEntity.ok(result);
     }
 
     @Log("删除用户")

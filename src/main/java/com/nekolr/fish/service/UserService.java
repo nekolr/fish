@@ -40,6 +40,15 @@ public interface UserService {
     UserDTO saveUser(User user);
 
     /**
+     * 更新用户
+     *
+     * @param user
+     * @return
+     */
+    @CacheEvict(allEntries = true)
+    UserDTO updateUser(User user);
+
+    /**
      * 删除用户
      *
      * @param id
