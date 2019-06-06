@@ -6,6 +6,8 @@ import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 
+import java.util.List;
+
 /**
  * @author nekolr
  */
@@ -55,5 +57,13 @@ public interface UserService {
      */
     @CacheEvict(allEntries = true)
     void deleteUser(Long id);
+
+    /**
+     * 批量删除
+     *
+     * @param ids
+     */
+    @CacheEvict(allEntries = true)
+    void deleteBatch(List<Long> ids);
 
 }

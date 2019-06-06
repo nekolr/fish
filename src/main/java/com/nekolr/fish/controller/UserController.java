@@ -1,14 +1,18 @@
 package com.nekolr.fish.controller;
 
 import com.nekolr.fish.entity.User;
+import com.nekolr.fish.exception.BadRequestException;
 import com.nekolr.fish.log.annotation.Log;
 import com.nekolr.fish.service.UserService;
 import com.nekolr.fish.service.dto.UserDTO;
 import com.nekolr.fish.service.mapper.UserMapper;
 import com.nekolr.fish.service.query.UserQueryService;
 import com.nekolr.fish.support.FishSecurityContextHolder;
+import com.nekolr.fish.support.I18nUtils;
 import com.nekolr.fish.support.PageRequest;
 import com.nekolr.fish.vo.PageVO;
+import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +22,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * 用户控制器
@@ -36,6 +43,8 @@ public class UserController {
     private UserMapper userMapper;
     @Autowired
     private FishSecurityContextHolder securityContextHolder;
+    @Autowired
+    private I18nUtils i18nUtils;
 
     @Log("获取用户列表")
     @GetMapping("/users")
@@ -80,11 +89,23 @@ public class UserController {
         return ResponseEntity.ok(result);
     }
 
-    @Log("删除用户")
-    @DeleteMapping("/users/{id}")
+    @Log("批量删除用户")
+    @DeleteMapping({"/users/{id}", "/users"})
     @PreAuthorize("hasAnyAuthority('USER_ALL', 'USER_DELETE')")
-    public ResponseEntity deleteUser(@PathVariable Long id) {
-        userService.deleteUser(id);
+    public ResponseEntity deleteUser(@PathVariable(required = false) Long id, @RequestParam String ids) {
+        if (ObjectUtils.isEmpty(id)) {
+            String[] keys = StringUtils.split(ids, ",");
+            List<Long> newKeys = new ArrayList<>(keys.length);
+            Arrays.stream(keys).forEach(key -> {
+                if (!NumberUtils.isDigits(key)) {
+                    throw new BadRequestException(i18nUtils.getMessage("exceptions.bad_request"));
+                }
+                newKeys.add(Long.valueOf(key));
+            });
+            userService.deleteBatch(newKeys);
+        } else {
+            userService.deleteUser(id);
+        }
         return new ResponseEntity(HttpStatus.OK);
     }
 

@@ -17,6 +17,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author nekolr
@@ -80,5 +82,16 @@ public class UserServiceImpl implements UserService {
         if (!id.equals(1L)) {
             userRepository.deleteById(id);
         }
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteBatch(List<Long> ids) {
+        List<User> users = ids.stream().map(id -> {
+            User user = new User();
+            user.setId(id);
+            return user;
+        }).collect(Collectors.toList());
+        userRepository.deleteInBatch(users);
     }
 }
