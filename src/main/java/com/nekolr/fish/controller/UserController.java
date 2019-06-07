@@ -11,7 +11,6 @@ import com.nekolr.fish.support.FishSecurityContextHolder;
 import com.nekolr.fish.support.I18nUtils;
 import com.nekolr.fish.support.PageRequest;
 import com.nekolr.fish.vo.PageVO;
-import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,23 +88,35 @@ public class UserController {
         return ResponseEntity.ok(result);
     }
 
-    @Log("批量删除用户")
-    @DeleteMapping({"/users/{id}", "/users"})
+    @Log("删除用户")
+    @DeleteMapping("/users/{id}")
     @PreAuthorize("hasAnyAuthority('USER_ALL', 'USER_DELETE')")
-    public ResponseEntity deleteUser(@PathVariable(required = false) Long id, @RequestParam String ids) {
-        if (ObjectUtils.isEmpty(id)) {
-            String[] keys = StringUtils.split(ids, ",");
-            List<Long> newKeys = new ArrayList<>(keys.length);
-            Arrays.stream(keys).forEach(key -> {
-                if (!NumberUtils.isDigits(key)) {
-                    throw new BadRequestException(i18nUtils.getMessage("exceptions.bad_request"));
-                }
-                newKeys.add(Long.valueOf(key));
-            });
-            userService.deleteBatch(newKeys);
-        } else {
-            userService.deleteUser(id);
+    public ResponseEntity deleteUser(@PathVariable Long id) {
+        // 超级管理员无法删除
+        if (id.equals(1L)) {
+            throw new BadRequestException(i18nUtils.getMessage("exceptions.bad_request"));
         }
+        userService.deleteUser(id);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @Log("批量删除用户")
+    @DeleteMapping("/users")
+    @PreAuthorize("hasAnyAuthority('USER_ALL', 'USER_DELETE')")
+    public ResponseEntity batchDeleteUser(@RequestParam String ids) {
+        String[] keys = StringUtils.split(ids, ",");
+        List<Long> newKeys = new ArrayList<>(keys.length);
+        Arrays.stream(keys).forEach(key -> {
+            if (!NumberUtils.isDigits(key)) {
+                throw new BadRequestException(i18nUtils.getMessage("exceptions.bad_request"));
+            }
+            Long id = Long.valueOf(key);
+            // 超级管理员无法删除
+            if (!id.equals(1L)) {
+                newKeys.add(id);
+            }
+        });
+        userService.deleteBatch(newKeys);
         return new ResponseEntity(HttpStatus.OK);
     }
 
