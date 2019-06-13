@@ -71,7 +71,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO updateUser(User source) {
-        User user = userRepository.save(source);
+
+        User entity = userRepository.findById(source.getId()).get();
+        entity.setEnabled(source.getEnabled());
+        entity.setAge(source.getAge());
+        entity.setAvatar(source.getAvatar());
+        entity.setDepartment(source.getDepartment());
+        entity.setJob(source.getJob());
+        entity.setEmail(source.getEmail());
+        entity.setPhone(source.getPhone());
+        entity.setGender(source.getGender());
+        entity.setRealName(source.getRealName());
+        entity.setRoles(source.getRoles());
+
+        User user = userRepository.save(entity);
         return userMapper.toDto(user);
     }
 

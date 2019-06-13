@@ -15,6 +15,8 @@ public class PermissionDTO extends CommonDTO {
 
     private Timestamp createTime;
 
+    private Long sort;
+
     @Override
     public String toString() {
         return "PermissionDTO{" +
