@@ -40,6 +40,7 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public PermissionDTO savePermission(Permission source) {
 
         if (ObjectUtils.isNotEmpty(permissionRepository.findByName(source.getName()))) {
@@ -51,6 +52,7 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public PermissionDTO updatePermission(Permission source) {
 
         Permission entity = permissionRepository.findById(source.getId()).get();
@@ -64,6 +66,7 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void deletePermission(Long id) {
         permissionRepository.deleteById(id);
     }

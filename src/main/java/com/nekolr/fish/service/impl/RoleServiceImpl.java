@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
@@ -20,7 +20,7 @@ public class RoleServiceImpl implements RoleService {
 
     @Autowired
     private RoleRepository roleRepository;
-    @Autowired
+    @Resource
     private RoleMapper roleMapper;
 
     @Override
@@ -30,6 +30,6 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public List<RoleDTO> findAll() {
-        return roleRepository.findAll().stream().map(role -> roleMapper.toDto(role)).collect(Collectors.toList());
+        return roleMapper.toDto(roleRepository.findAll());
     }
 }

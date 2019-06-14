@@ -51,7 +51,7 @@ public interface PermissionService {
 
 
     /**
-     * 删除用户
+     * 删除权限
      *
      * @param id
      */

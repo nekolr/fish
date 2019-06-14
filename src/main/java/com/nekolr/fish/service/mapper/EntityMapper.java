@@ -1,6 +1,8 @@
 package com.nekolr.fish.service.mapper;
 
 
+import java.util.List;
+
 /**
  * 实体映射接口
  *
@@ -24,4 +26,20 @@ public interface EntityMapper<E, D> {
      * @return
      */
     E toEntity(D dto);
+
+    /**
+     * entity 结合映射为 dto 集合
+     *
+     * @param entityList
+     * @return
+     */
+    List<D> toDto(List<E> entityList);
+
+    /**
+     * dto 集合映射为 entity 集合
+     *
+     * @param dtoList
+     * @return
+     */
+    List<E> toEntity(List<D> dtoList);
 }

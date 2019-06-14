@@ -26,4 +26,13 @@ public interface MenuRepository extends JpaRepository<Menu, Long>, JpaSpecificat
      */
     @Query(value = "SELECT DISTINCT m.* FROM menu m LEFT JOIN role_menu rm on m.id = rm.menu_id WHERE role_id IN(:roleIds)", nativeQuery = true)
     List<Menu> findAllByRoleIds(@Param("roleIds") List<Long> roleIds);
+
+
+    /**
+     * 根据名称查询
+     *
+     * @param name
+     * @return
+     */
+    Menu findByName(String name);
 }
