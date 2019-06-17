@@ -48,8 +48,8 @@ public class UserController {
     @Log("获取用户列表")
     @GetMapping("/users")
     @PreAuthorize("hasAnyAuthority('USER_ALL', 'USER_SELECT')")
-    public ResponseEntity<PageVO> getUsers(UserDTO userDTO, PageRequest pageRequest) {
-        return new ResponseEntity(userQueryService.queryAll(userDTO, pageRequest.toPageable()), HttpStatus.OK);
+    public ResponseEntity<PageVO> getUsers(UserDTO user, PageRequest pageRequest) {
+        return new ResponseEntity(userQueryService.queryAll(user, pageRequest.toPageable()), HttpStatus.OK);
     }
 
     @Log("获取用户信息")

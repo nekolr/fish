@@ -34,8 +34,8 @@ public class UserQueryService {
     private UserMapper userMapper;
 
     @Cacheable(keyGenerator = "keyGenerator")
-    public PageVO queryAll(UserDTO userDTO, Pageable pageable) {
-        Page<User> users = userRepository.findAll(new Spec(userDTO), pageable);
+    public PageVO queryAll(UserDTO user, Pageable pageable) {
+        Page<User> users = userRepository.findAll(new Spec(user), pageable);
         return PageUtils.toPageVO(users.map(userMapper::toDto));
     }
 
