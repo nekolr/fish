@@ -13,7 +13,7 @@ FROM openjdk:8-jdk-alpine
 
 ENV VERSION 0.0.1-SNAPSHOT
 
-COPY --from=build /usr/src/app/fish/target/fish-${VERSION}.jar .
+COPY --from=build /usr/src/app/target/fish-${VERSION}.jar .
 
 EXPOSE 12001
 
