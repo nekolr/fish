@@ -13,6 +13,15 @@
 ## 简介
 Fish 是一个使用 Spring Boot + Spring Security + JWT 开发的基于 RBAC 权限控制的快速启动器。
 
+## 前端
+前端项目为 [d2-admin-fish](https://github.com/nekolr/d2-admin-fish)
+
+![home](https://github.com/nekolr/fish/blob/master/media/home.png)
+![user](https://github.com/nekolr/fish/blob/master/media/user.png)
+![role](https://github.com/nekolr/fish/blob/master/media/role.png)
+![permission](https://github.com/nekolr/fish/blob/master/media/permission.png)
+![menu](https://github.com/nekolr/fish/blob/master/media/menu.png)
+
 ## 使用
 > 缓存使用了 Redis，因此需要先启动一个 Redis Server 服务，然后再启动主程序。
 
