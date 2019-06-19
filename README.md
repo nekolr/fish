@@ -48,6 +48,7 @@ $ docker build --no-cache -t nekolr/fish:0.0.1 .
 - 运行容器
 ```bash
 $ docker run --name fish -dit \
+    -e "VERSION=0.0.1.RELEASE"
     --network=host \
     nekolr/fish:0.0.1
 ```

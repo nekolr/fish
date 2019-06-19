@@ -12,7 +12,7 @@
 
     <groupId>com.nekolr</groupId>
     <artifactId>fish</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1-RELEASE</version>
     <name>fish</name>
 
     <description>An rbac-based application</description>
