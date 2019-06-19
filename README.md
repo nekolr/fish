@@ -36,3 +36,17 @@ $ mvn clean package
 ```
 $ cd target && java -jar fish-0.0.1-SNAPSHOT.jar
 ```
+
+## Docker
+- 构建镜像
+需要注意的是，构建使用了多阶段构建。在第一个阶段使用了非官方的 [Maven Image](https://github.com/nekolr/maven-image)（它是在官方镜像的基础上修改了 Maven 的配置文件，加入了阿里云镜像来加速构建过程）编译项目，因此需要先在服务器上构建该 Maven 镜像。
+```bash
+$ docker build --no-cache -t nekolr/fish:0.0.1 .
+```
+
+- 运行容器
+```bash
+$ docker run --name fish -dit \
+    --network=host \
+    nekolr/fish:0.0.1
+```

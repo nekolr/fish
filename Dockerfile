@@ -1,4 +1,5 @@
 #FROM maven:3.6.1-jdk-8-alpine AS build
+# https://github.com/nekolr/maven-image/tree/master/3.6.1-jdk-8
 FROM nekolr/maven:3.6.1 AS build
 
 RUN mkdir -p /usr/src/app
