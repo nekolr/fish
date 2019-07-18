@@ -13,7 +13,7 @@ RUN mvn clean package
 
 FROM openjdk:8-jdk-alpine
 
-ENV VERSION 0.0.1-SNAPSHOT
+ENV VERSION 0.0.1.RELEASE
 
 COPY --from=build /usr/src/app/target/fish-${VERSION}.jar .
 
